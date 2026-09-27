@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>DNS Sinkhole & Mesh VPN | jaimelearns.tech</title>
+  <style>
+    /* Same Earth Tone Palette */
+    :root {
+      --bg-cream: #F1EFE7;
+      --bg-tan: #D3C5B3;
+      --accent-terracotta: #B38A6B;
+      --text-dark: #6A4C3A;
+      --accent-olive: #697354;
+      --text-body: #3b2c22;
+      --white-panel: #FAFAF8;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      background-color: var(--bg-cream);
+      color: var(--text-body);
+      line-height: 1.7;
+    }
+
+    header.site-header {
+      background-color: var(--text-dark);
+      color: var(--bg-cream);
+      padding: 1.5rem 0;
+      border-bottom: 6px solid var(--accent-terracotta);
+    }
+
+    .nav-container {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 0 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .brand { font-weight: 700; font-size: 1.4rem; color: var(--bg-cream); text-decoration: none; }
+    .nav-links a { color: var(--bg-cream); text-decoration: none; margin-left: 24px; opacity: 0.9; }
+    .nav-links a:hover { opacity: 1; text-decoration: underline; text-decoration-color: var(--accent-terracotta); text-decoration-thickness: 2px; }
+
+    main {
+      max-width: 800px; /* Slightly narrower for reading focus */
+      margin: 40px auto 80px auto;
+      padding: 0 20px;
+    }
+
+    /* Article Styles */
+    .article-header { margin-bottom: 40px; }
+    .article-meta { color: var(--accent-olive); font-weight: 600; font-size: 0.9rem; text-transform: uppercase; margin-bottom: 12px; }
+    .article-title { color: var(--text-dark); font-size: 2.2rem; line-height: 1.2; margin-bottom: 20px; }
+    
+    .article-content h2 { color: var(--text-dark); font-size: 1.5rem; border-bottom: 2px solid var(--bg-tan); padding-bottom: 8px; margin-top: 40px; margin-bottom: 16px; }
+    .article-content p { margin-bottom: 20px; font-size: 1.1rem; }
+    .article-content ul { margin-bottom: 20px; padding-left: 24px; font-size: 1.1rem; }
+    .article-content li { margin-bottom: 8px; }
+    
+    /* Code block styling */
+    pre { background: var(--white-panel); border: 1px solid var(--bg-tan); padding: 16px; border-radius: 6px; overflow-x: auto; margin-bottom: 20px; font-size: 0.95rem; }
+    code { font-family: Consolas, Monaco, "Courier New", monospace; color: var(--text-dark); }
+
+    .back-link { display: inline-block; margin-bottom: 30px; color: var(--accent-olive); text-decoration: none; font-weight: 600; }
+    .back-link:hover { color: var(--accent-terracotta); }
+
+    footer { background-color: var(--text-dark); color: var(--bg-cream); text-align: center; padding: 40px 20px; margin-top: 60px; }
+    .footer-links a { color: var(--bg-cream); text-decoration: none; margin: 0 12px; }
+  </style>
+</head>
+<body>
+
+  <header class="site-header">
+    <div class="nav-container">
+      <a href="index.html" class="brand">jaimelearns.tech</a>
+      <nav class="nav-links">
+        <a href="index.html#about">About</a>
+        <a href="index.html#lab-notes">Lab Notes</a>
+        <a href="index.html#projects">Hardware & Builds</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <a href="index.html" class="back-link">&larr; Back to Home</a>
+    
+    <header class="article-header">
+      <div class="article-meta">Networking • Pi-Hole • Tailscale</div>
+      <h1 class="article-title">Deploying a Secure DNS Sinkhole across a Mesh VPN</h1>
+    </header>
+
+    <article class="article-content">
+      <h2>The Goal</h2>
+      <p>I needed a way to ensure all my remote devices (laptop, phone) had ad-blocking and secure DNS resolution applied to them, regardless of whether they were on my home network, a coffee shop Wi-Fi, or cellular data.</p>
+      
+      <h2>Architecture & Setup</h2>
+      <p>Instead of opening ports on my public IP, I utilized a mesh VPN approach:</p>
+      <ul>
+        <li><strong>Host:</strong> Proxmox VE node in the homelab.</li>
+        <li><strong>Container:</strong> Deployed Pi-hole in an unprivileged LXC container (Ubuntu template).</li>
+        <li><strong>Networking:</strong> Installed Tailscale on the LXC container to assign it a static mesh IP address.</li>
+      </ul>
+
+      <h2>Configuration Steps</h2>
+      <p>Once Tailscale was running in the container, I configured my Tailscale admin console to use the Pi-hole's Tailnet IP as the global nameserver.</p>
+      
+      <pre><code># Example command I used to advertise the Pi-hole node
+tailscale up --accept-dns=false --advertise-tags=tag:dns
+      </code></pre>
+
+      <h2>Challenges Encountered</h2>
+      <p>Initially, Pi-hole was dropping queries from the Tailscale interface because it only listens to the local `eth0` interface by default. I resolved this by changing the Pi-hole DNS settings to <strong>"Permit all origins"</strong>, since the LXC container is securely isolated behind the Tailscale network anyway.</p>
+    </article>
+  </main>
+
+  <footer>
+    <div class="footer-links" style="margin-bottom: 16px;">
+      <a href="https://github.com/jaimelearnscoding" target="_blank" rel="noopener">GitHub</a>
+      <a href="mailto:jaimefartsalot@gmail.com">Contact</a>
+    </div>
+    <p style="font-size: 0.9rem; opacity: 0.8;">&copy; 2026 Jaime Luis Oyola III. Hosted on GitHub Pages.</p>
+  </footer>
+
+</body>
+</html>
