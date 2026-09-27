@@ -3,19 +3,18 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Jaime | IT & Systems Portfolio</title>
-  <meta name="description" content="Personal IT portfolio showcasing infrastructure, networking, homelab builds, and automation projects." />
+  <title>Jaime | Systems & Lab Notes</title>
+  <meta name="description" content="Personal IT portfolio and lab documentation." />
   <style>
+    /* Earth Tone Palette based on user reference */
     :root {
-      --bg: #0d1117;
-      --card-bg: #161b22;
-      --card-hover: #1c2128;
-      --text: #c9d1d9;
-      --text-bright: #f0f6fc;
-      --text-muted: #8b949e;
-      --accent: #58a6ff;
-      --border: #30363d;
-      --tag-bg: #21262d;
+      --bg-cream: #F1EFE7;       /* Lightest - Background */
+      --bg-tan: #D3C5B3;         /* Card accents / borders */
+      --accent-terracotta: #B38A6B; /* Buttons / Hover states */
+      --text-dark: #6A4C3A;      /* Headings / Navigation */
+      --accent-olive: #697354;   /* Primary links / Tags */
+      --text-body: #3b2c22;      /* Darkened brown for readable body text */
+      --white-panel: #FAFAF8;    /* Slightly off-white for content cards */
     }
 
     * {
@@ -26,25 +25,23 @@
 
     body {
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-      background-color: var(--bg);
-      color: var(--text);
-      line-height: 1.6;
+      background-color: var(--bg-cream);
+      color: var(--text-body);
+      line-height: 1.7;
     }
 
-    /* Navigation */
-    header.navbar {
-      position: sticky;
-      top: 0;
-      background: rgba(13, 17, 23, 0.9);
-      backdrop-filter: blur(8px);
-      border-bottom: 1px solid var(--border);
-      z-index: 100;
+    /* Navigation (Geerling/Tim Style - Clean & Header-focused) */
+    header.site-header {
+      background-color: var(--text-dark);
+      color: var(--bg-cream);
+      padding: 1.5rem 0;
+      border-bottom: 6px solid var(--accent-terracotta);
     }
 
     .nav-container {
       max-width: 900px;
       margin: 0 auto;
-      padding: 16px 20px;
+      padding: 0 20px;
       display: flex;
       justify-content: space-between;
       align-items: center;
@@ -52,367 +49,224 @@
 
     .brand {
       font-weight: 700;
-      font-size: 1.1rem;
-      color: var(--text-bright);
+      font-size: 1.4rem;
+      color: var(--bg-cream);
       text-decoration: none;
+      letter-spacing: 0.5px;
     }
 
     .nav-links a {
-      color: var(--text-muted);
+      color: var(--bg-cream);
       text-decoration: none;
-      margin-left: 20px;
-      font-size: 0.95rem;
-      transition: color 0.2s ease;
+      margin-left: 24px;
+      font-size: 1rem;
+      opacity: 0.9;
+      transition: opacity 0.2s ease;
     }
 
     .nav-links a:hover {
-      color: var(--accent);
+      opacity: 1;
+      text-decoration: underline;
+      text-decoration-color: var(--accent-terracotta);
+      text-decoration-thickness: 2px;
     }
 
-    /* Layout Container */
+    /* Main Content Container */
     main {
       max-width: 900px;
       margin: 40px auto 80px auto;
       padding: 0 20px;
     }
 
-    section {
-      margin-bottom: 56px;
+    h1, h2, h3 {
+      color: var(--text-dark);
+      margin-bottom: 1rem;
     }
 
     h2 {
-      color: var(--text-bright);
-      font-size: 1.5rem;
-      margin-bottom: 20px;
+      font-size: 1.8rem;
+      border-bottom: 2px solid var(--bg-tan);
       padding-bottom: 8px;
-      border-bottom: 1px solid var(--border);
-    }
-
-    /* Hero */
-    .hero {
-      padding: 20px 0 30px 0;
-    }
-
-    .hero h1 {
-      color: var(--text-bright);
-      font-size: 2.4rem;
-      line-height: 1.2;
-      margin-bottom: 12px;
-    }
-
-    .hero p {
-      font-size: 1.15rem;
-      color: var(--text-muted);
-      max-width: 650px;
+      margin-top: 40px;
       margin-bottom: 24px;
     }
 
-    .cta-btn {
-      display: inline-block;
-      background: var(--tag-bg);
-      color: var(--accent);
-      border: 1px solid var(--border);
-      padding: 8px 16px;
-      border-radius: 6px;
-      text-decoration: none;
-      font-weight: 600;
-      transition: all 0.2s ease;
-    }
-
-    .cta-btn:hover {
-      background: var(--border);
-      border-color: var(--accent);
-    }
-
-    /* Skill Grid */
-    .skill-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-      gap: 16px;
-    }
-
-    .skill-card {
-      background: var(--card-bg);
-      border: 1px solid var(--border);
+    /* About Section */
+    .about-section {
+      background: var(--white-panel);
+      padding: 32px;
       border-radius: 8px;
-      padding: 18px;
+      border-left: 6px solid var(--accent-olive);
+      box-shadow: 0 2px 4px rgba(0,0,0,0.04);
+      margin-bottom: 48px;
     }
 
-    .skill-card h3 {
-      color: var(--text-bright);
-      font-size: 1.05rem;
-      margin-bottom: 8px;
-    }
-
-    .skill-card p {
-      font-size: 0.9rem;
-      color: var(--text-muted);
-    }
-
-    /* Project Cards */
-    .project-card {
-      background: var(--card-bg);
-      border: 1px solid var(--border);
-      border-radius: 8px;
-      padding: 24px;
-      margin-bottom: 24px;
-      transition: border-color 0.2s ease;
-    }
-
-    .project-card:hover {
-      border-color: var(--accent);
-    }
-
-    .project-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: flex-start;
-      margin-bottom: 12px;
-      flex-wrap: wrap;
-      gap: 8px;
-    }
-
-    .project-title {
-      font-size: 1.25rem;
-      color: var(--text-bright);
-    }
-
-    .tags {
-      display: flex;
-      gap: 6px;
-      flex-wrap: wrap;
-    }
-
-    .tag {
-      background: var(--tag-bg);
-      border: 1px solid var(--border);
-      border-radius: 4px;
-      padding: 2px 8px;
-      font-size: 0.8rem;
-      color: var(--text-muted);
-    }
-
-    .project-body {
-      color: var(--text);
-      font-size: 0.95rem;
+    .about-section p {
       margin-bottom: 16px;
+      font-size: 1.05rem;
     }
 
-    .project-highlights {
-      list-style-position: inside;
-      margin: 12px 0;
-      color: var(--text-muted);
-      font-size: 0.9rem;
+    .about-section p:last-child {
+      margin-bottom: 0;
     }
 
-    .project-highlights li {
-      margin-bottom: 4px;
-    }
-
-    /* Certifications & Education */
-    .cert-list {
+    /* Blog / Documentation Feed Style */
+    .post-feed {
       display: flex;
       flex-direction: column;
-      gap: 12px;
+      gap: 24px;
     }
 
-    .cert-item {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      background: var(--card-bg);
-      border: 1px solid var(--border);
+    .post-card {
+      background: var(--white-panel);
+      padding: 24px;
       border-radius: 8px;
-      padding: 16px 20px;
+      border: 1px solid var(--bg-tan);
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
     }
 
-    .cert-name {
-      color: var(--text-bright);
-      font-weight: 600;
+    .post-card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.06);
+      border-color: var(--accent-terracotta);
     }
 
-    .cert-status {
+    .post-meta {
       font-size: 0.85rem;
-      color: var(--accent);
+      color: var(--accent-olive);
+      font-weight: 600;
+      margin-bottom: 8px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
     }
 
-    /* Footer / Contact */
-    footer {
-      border-top: 1px solid var(--border);
-      padding: 40px 20px;
-      text-align: center;
-      color: var(--text-muted);
-      font-size: 0.9rem;
+    .post-title {
+      font-size: 1.4rem;
+      margin-bottom: 12px;
     }
 
-    .footer-links {
+    .post-title a {
+      color: var(--text-dark);
+      text-decoration: none;
+    }
+
+    .post-title a:hover {
+      color: var(--accent-terracotta);
+    }
+
+    .post-excerpt {
       margin-bottom: 16px;
+      font-size: 1rem;
+    }
+
+    .read-more {
+      display: inline-block;
+      color: var(--text-main);
+      font-weight: 600;
+      text-decoration: none;
+      border-bottom: 2px solid var(--accent-terracotta);
+      padding-bottom: 2px;
+    }
+
+    .read-more:hover {
+      color: var(--accent-terracotta);
+    }
+
+    /* Footer */
+    footer {
+      background-color: var(--text-dark);
+      color: var(--bg-cream);
+      text-align: center;
+      padding: 40px 20px;
+      margin-top: 60px;
     }
 
     .footer-links a {
-      color: var(--accent);
+      color: var(--bg-cream);
       text-decoration: none;
       margin: 0 12px;
+      border-bottom: 1px solid transparent;
     }
 
     .footer-links a:hover {
-      text-decoration: underline;
+      border-bottom-color: var(--accent-terracotta);
     }
   </style>
 </head>
 <body>
 
-  <!-- Navigation Bar -->
-  <header class="navbar">
+  <header class="site-header">
     <div class="nav-container">
-      <a href="#" class="brand">jaimelearnstech.com</a>
+      <a href="#" class="brand">jaimelearns.tech</a>
       <nav class="nav-links">
         <a href="#about">About</a>
-        <a href="#skills">Skills</a>
-        <a href="#projects">Projects</a>
-        <a href="#certifications">Certs</a>
-        <a href="#contact">Contact</a>
+        <a href="#lab-notes">Lab Notes</a>
+        <a href="#projects">Hardware & Builds</a>
       </nav>
     </div>
   </header>
 
   <main>
-   <!-- Hero / About -->
-    <section id="about" class="hero">
+    <section id="about" class="about-section">
       <h1>Hi, I'm Jaime.</h1>
-      <p style="font-size: 1.15rem; color: var(--text-bright); margin-bottom: 14px;">
-        <strong>System Administrator</strong> with hands-on experience supporting people and technology across multiple office locations.
-      </p>
-      <p style="margin-bottom: 14px;">
-        My work spans Microsoft 365, Active Directory, endpoint management, networking, backups, and security. I enjoy tracing difficult problems to their root cause and turning the fix into a reliable process my team can use again.
-      </p>
-      <p style="margin-bottom: 24px;">
-        Outside of work, I build and maintain a home lab where I explore virtualization, storage, networking, and automation. It gives me room to test ideas, learn by doing, and bring what I learn back to the systems I support every day.
-      </p>
-      <div style="display: flex; gap: 12px; flex-wrap: wrap;">
-        <a href="#projects" class="cta-btn">View Lab Projects</a>
-        <a href="#contact" class="cta-btn" style="color: var(--text-bright); border-color: var(--border);">Get In Touch</a>
+      <p><strong>System Administrator</strong> with hands-on experience supporting people and technology across multiple office locations.</p>
+      <p>My work spans Microsoft 365, Active Directory, endpoint management, networking, backups, and security. I enjoy tracing difficult problems to their root cause and turning the fix into a reliable process my team can use again.</p>
+      <p>Outside of work, I build and maintain a home lab where I explore virtualization, storage, networking, and automation. It gives me room to test ideas, learn by doing, and bring what I learn back to the systems I support every day.</p>
+    </section>
+
+    <section id="lab-notes">
+      <h2>Recent Lab Notes & Tutorials</h2>
+      <div class="post-feed">
+        
+        <!-- Note 1 -->
+        <article class="post-card">
+          <div class="post-meta">Networking • Pi-Hole • Tailscale</div>
+          <h3 class="post-title"><a href="#">Deploying a Secure DNS Sinkhole across a Mesh VPN</a></h3>
+          <p class="post-excerpt">Walking through how I configured Tailscale alongside Pi-hole in an LXC container to ensure ad-blocking and secure DNS resolution applies to all my remote devices, regardless of the network they connect to.</p>
+          <a href="#" class="read-more">Read Full Setup &rarr;</a>
+        </article>
+
+        <!-- Note 2 -->
+        <article class="post-card">
+          <div class="post-meta">Python • Automation</div>
+          <h3 class="post-title"><a href="#">Automating Repetitive Tasks with Python Loops</a></h3>
+          <p class="post-excerpt">A breakdown of custom Python scripts I use to automate mundane workflows. I cover how I structure the logic routing, handle dependencies, and test the scripts before implementing them.</p>
+          <a href="#" class="read-more">Read Full Setup &rarr;</a>
+        </article>
+
+        <!-- Note 3 -->
+        <article class="post-card">
+          <div class="post-meta">Certification • CompTIA</div>
+          <h3 class="post-title"><a href="#">Studying for Network+: Subnetting and Diagnostics</a></h3>
+          <p class="post-excerpt">My current progress preparing for the CompTIA Network+ exam. Sharing my approach to mastering packet analysis with Wireshark and breaking down subnetting into manageable chunks.</p>
+          <a href="#" class="read-more">Read Full Setup &rarr;</a>
+        </article>
+
       </div>
     </section>
 
-    <!-- Technical Skills / Competencies -->
-    <section id="skills">
-      <h2>Technical Competencies</h2>
-      <div class="skill-grid">
-        <div class="skill-card">
-          <h3>Systems & OS</h3>
-          <p>Linux administration, Proxmox VE clustering, containerization (LXC/Docker), Windows desktop/server support.</p>
-        </div>
-        <div class="skill-card">
-          <h3>Networking & Security</h3>
-          <p>VLAN segmentation, DNS sinkholing (Pi-hole), mesh VPNs (Tailscale), packet analysis (Wireshark), firewall rule deployment.</p>
-        </div>
-        <div class="skill-card">
-          <h3>Storage & Reliability</h3>
-          <p>ZFS pool architecture, NAS file systems (NFS/SMB), scheduled automated snapshot workflows, disaster recovery planning.</p>
-        </div>
-        <div class="skill-card">
-          <h3>Automation & Scripting</h3>
-          <p>Python automation routines, Bash system administration scripts, Git version control, Power BI/Power Automate workflows.</p>
-        </div>
-      </div>
-    </section>
-
-    <!-- Project Showcase -->
     <section id="projects">
-      <h2>Featured IT Projects</h2>
+      <h2>Hardware & Infrastructure Builds</h2>
+      <div class="post-feed">
+        
+        <!-- Build 1 -->
+        <article class="post-card">
+          <div class="post-meta">Proxmox VE • ZFS • High Availability</div>
+          <h3 class="post-title"><a href="#">Building a 3-Node Proxmox Cluster on Thin Clients</a></h3>
+          <p class="post-excerpt">Documenting my transition to a high-availability homelab. I cover the hardware sourcing, setting up ZFS storage pools, and configuring automated backups to an integrated Synology NAS via NFS/SMB targets.</p>
+          <a href="#" class="read-more">View Architecture Diagram &rarr;</a>
+        </article>
 
-      <!-- Project 1 -->
-      <article class="project-card">
-        <div class="project-header">
-          <h3 class="project-title">Multi-Node High Availability Virtualization Cluster</h3>
-          <div class="tags">
-            <span class="tag">Proxmox VE</span>
-            <span class="tag">ZFS</span>
-            <span class="tag">NFS / SMB</span>
-            <span class="tag">LXC</span>
-          </div>
-        </div>
-        <div class="project-body">
-          <p>Architected and built a dedicated three-node high-availability homelab cluster running Proxmox VE on compact enterprise thin clients to host core infrastructure services with automated failover.</p>
-          <ul class="project-highlights">
-            <li>Implemented localized ZFS storage pools paired with network-attached storage targets for redundant backup storage.</li>
-            <li>Configured automated guest backup routines and snapshot scheduling with minimal downtime.</li>
-            <li>Isolated infrastructure services into lightweight LXC containers, including centralized DNS sinkholing.</li>
-          </ul>
-        </div>
-      </article>
-
-      <!-- Project 2 -->
-      <article class="project-card">
-        <div class="project-header">
-          <h3 class="project-title">Centralized IT Alert & Monitoring Pipeline</h3>
-          <div class="tags">
-            <span class="tag">Power BI</span>
-            <span class="tag">Power Automate</span>
-            <span class="tag">API Integration</span>
-          </div>
-        </div>
-        <div class="project-body">
-          <p>Designed and deployed an automated reporting pipeline aggregating critical alerts and threat intelligence across multi-vendor IT management and endpoint protection platforms.</p>
-          <ul class="project-highlights">
-            <li>Parsed and routed alerting webhooks to eliminate manual daily console checks across disparate vendors.</li>
-            <li>Engineered centralized Power BI dashboards offering real-time visibility into infrastructure health and security events.</li>
-          </ul>
-        </div>
-      </article>
-
-      <!-- Project 3 -->
-      <article class="project-card">
-        <div class="project-header">
-          <h3 class="project-title">Secure Overlay Mesh Networking & DNS Architecture</h3>
-          <div class="tags">
-            <span class="tag">Tailscale</span>
-            <span class="tag">Pi-hole</span>
-            <span class="tag">WireGuard</span>
-            <span class="tag">DNS</span>
-          </div>
-        </div>
-        <div class="project-body">
-          <p>Established a secure, zero-trust remote access architecture connecting remote endpoints, virtualization nodes, and internal storage arrays without port-forwarding on public IPv4.</p>
-          <ul class="project-highlights">
-            <li>Integrated local network-wide ad-blocking and domain resolution rules through a virtualized Pi-hole DNS sinkhole.</li>
-            <li>Enforced strict tunnel security policies and isolated administrative traffic across internal and external subnets.</li>
-          </ul>
-        </div>
-      </article>
-    </section>
-
-    <!-- Certifications & Continuous Learning -->
-    <section id="certifications">
-      <h2>Certifications & Professional Development</h2>
-      <div class="cert-list">
-        <div class="cert-item">
-          <div>
-            <div class="cert-name">CompTIA Network+</div>
-            <div style="font-size: 0.85rem; color: var(--text-muted);">Networking Architecture, Routing & Diagnostics</div>
-          </div>
-          <span class="cert-status">In Progress</span>
-        </div>
-        <div class="cert-item">
-          <div>
-            <div class="cert-name">Personal IT Lab & Infrastructure Documentation</div>
-            <div style="font-size: 0.85rem; color: var(--text-muted);">Ongoing hands-on systems, storage, and networking builds</div>
-          </div>
-          <span class="cert-status">Active</span>
-        </div>
       </div>
     </section>
   </main>
 
-  <!-- Footer / Contact -->
-  <footer id="contact">
-    <div class="footer-links">
+  <footer>
+    <div class="footer-links" style="margin-bottom: 16px;">
       <a href="https://github.com/jaimelearnscoding" target="_blank" rel="noopener">GitHub</a>
-      <!-- Add your LinkedIn or preferred contact link below -->
-      <a href="mailto:jaimefartsalot@gmail.com">Email Me</a>
+      <a href="mailto:jaimefartsalot@gmail.com">Contact</a>
     </div>
-    <p>&copy; 2026 Jaime. Hosted on GitHub Pages via Custom DNS.</p>
+    <p style="font-size: 0.9rem; opacity: 0.8;">&copy; 2026 Jaime Luis Oyola III. Hosted on GitHub Pages.</p>
   </footer>
 
 </body>
